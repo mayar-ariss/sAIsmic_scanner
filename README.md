@@ -1,0 +1,1 @@
+s[AI]smic scanner
