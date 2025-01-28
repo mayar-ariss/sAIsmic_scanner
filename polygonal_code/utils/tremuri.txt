@@ -1,0 +1,123 @@
+TREMURI 1 7 0
+/impostazioni
+Default
+convergenza 3
+
+
+/pareti
+!num       X0       Y0       angle° (prefered rads)
+1       0.0000       0.0000       0°
+2       0.0000       0.0000       90°
+3       0.0000       4.2861       0°
+4       5.1832       0.0000       90°
+
+
+/Materiali
+!num             E                 G           rho             fm          tau0/fvm0     fvlim verifica  driftT  driftPF     mu      Gc       beta
+ 1           2.0800e+09       7.0000e+08       2360          5440000.0       224000.0       0        2        1        1      0.15     5        0.5
+99           2.0800e+09       7.0000e+08       2360          5440000.0       224000.0       0        2        1        1      0.15     5        0.0
+ 7           1.0000e+20       0.0000e+00       0
+
+
+/nodi2d
+!num  n_wall   X_local        Z         N/P/R     rho     thick     xleft      xright       zup        zdown 
+ 2     1      1.8400      4.5284      R      2360      0.3      0.0000      0.5096      0.0000     0.3647
+ 5     1      3.2811      4.4185      R      2360      0.3      0.4224      0.0000      0.0000     0.2548
+
+
+/nodi3d
+!num   n_subwalls    wall_i    wall_j    Z        N/P/R    rho    thick   xleft    xright     zup       zdown    N/P/R     rho   thick    xleft,   xright,     zup,    zdown
+ 1         2          1         2       2.7919      R     2360    0.3    0.0000    2.1240    0.7676    0.8778      N
+ 3         2          1         2       0.0000      R     2360    0.3    0.0000    2.1240    0.1030    0.0000      N
+17         2          2         3       0.0000      N                                                              N
+18         2          2         3       3.6377      N                                                              N
+ 9         2          3         4       0.0000      N                                                              N
+10         2          3         4       3.7222      N                                                              N
+11         2          4         1       0.0000      N                                                              R       2360    0.3    2.0988    0.0000    0.1030    0.0000
+12         2          4         1       2.8764      N                                                              R       2360    0.3    2.0988    0.0000    0.6831    0.9623
+
+
+/solaio
+!num    nd_i    nd_j    nd_k    nd_l    thick   E1         E2              ni      G      orientation    offset    warping
+
+
+/elementi
+!num  parete incI  incJ    XBARloc      ZBAR         b          h      thick      mat    type (0=pier 1=spandrel 2=Generic+angle)
+ 2     1      1      2      1.6726      3.8616     1.3539     0.6042     0.3        1      0
+ 5     1     12      5      3.5707      3.8616     1.4239     0.6042     0.3        1      0
+ 6     1     11     12      4.1338      1.0086     2.0988     1.8111     0.3        1      0
+ 7     1      3      1      1.0620      1.0086     2.1240     1.8111     0.3        1      0
+ 3     1      2      5      2.6041      4.3996     0.4717     0.5091     0.3       99      1
+ 4     1      3     11      2.6042      0.0515     0.1030     0.9604     0.3       99      1
+ 8     1      1     12      2.6042      2.7368     1.6454     0.9604     0.3       99      1
+15     2      3      1      1.0715      1.4235     2.1431     2.8470     0.3        1      0
+16     2     17     18      3.2146      1.4235     2.1431     2.8470     0.3        1      0
+11     3     17     18      1.2958      2.2142     2.5916     4.4284     0.3        1      0
+12     3      9     10      3.8874      2.2142     2.5916     4.4284     0.3        1      0
+13     4     11     12      1.0715      1.5080     2.1431     3.0160     0.3        1      0
+14     4      9     10      3.2146      1.5080     2.1431     3.0160     0.3        1      0
+
+
+/traveElastica
+!num wall incI   incJ mat  Area   J   InitDef  type dXi dZi dXj dZj
+17    2    17     3    7    10    5      0      0   0   0   0   0
+18    2    18     1    7    10    5      0      0   0   0   0   0
+19    3     9    17    7    10    5      0      0   0   0   0   0
+20    3    10    18    7    10    5      0      0   0   0   0   0
+21    4     9    11    7    10    5      0      0   0   0   0   0
+22    4    10    12    7    10    5      0      0   0   0   0   0
+
+
+/masse
+!1st floor
+
+
+/Piani    0    0
+
+
+/ripartizione
+!n2d  n3d   n3d
+2    12    1
+5    12    1
+
+
+/vincoli
+!nodo2d     UlocX     UZ      Rot (oppure:   Nodo2P UX UY UZ RotX RotY) 1=>vincolato
+ 3    v    v    v    v    v
+17    v    v    v    v    v
+ 9    v    v    v    v    v
+11    v    v    v    v    v
+
+
+!---------------------
+
+
+!analysis
+
+!modal
+/am 10
+
+
+!---------------------
+
+
+!OUTPUT
+
+/var period
+     periodo     1
+/var frequency
+     frequenza     1
+/var massX
+     ModMass.x     1
+/var massY
+     ModMass.y     1
+
+/OutFileSTADATA       "Output_modal.sta" 	 1      	0
+/output   EFM_modal.txt      2      2
+period      9      3
+frequency      9      3
+massX      9      3
+massY    9    3
+
+!----------------------------
+/fine
